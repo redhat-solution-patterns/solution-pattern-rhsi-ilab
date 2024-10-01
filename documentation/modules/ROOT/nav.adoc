@@ -15,7 +15,7 @@
 *** xref:03-demo.adoc#_installing_the_demo[{module}.{counter:submodule3}. Installing the demo]
 *** xref:03-demo.adoc#_walkthrough_guide[{module}.{counter:submodule3}. Walkthrough guide]
 
-* xref:conclusion.adoc[{counter:module}. Conclusion]
+* xref:04-conclusion.adoc[{counter:module}. Conclusion]
 
 * xref:developer-resources.adoc[{counter:module}. Developer Resources]
 

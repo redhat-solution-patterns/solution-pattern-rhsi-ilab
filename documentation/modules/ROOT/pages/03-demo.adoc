@@ -45,7 +45,6 @@ pip install 'instructlab[cuda]' -C cmake.args="-DLLAMA_CUDA=on" -C cmake.args="-
 This installation method will enable your Nvidia GPU to be used by InstructLab. If you don't have an Nvidia GPU, please check other options in: https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab Installation Guide].
 ====
 
-
 === Initialize the InstructLab Configuration
 
 After installing InstructLab, you need to initialize the configuration. This is the step where you create the `config.yaml` file, at `~/instructlab/config.yaml`, with the default configuration. To initialize the configuration, run the following command:
