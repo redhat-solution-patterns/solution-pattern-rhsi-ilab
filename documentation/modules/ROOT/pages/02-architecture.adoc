@@ -61,6 +61,3 @@ image::instructlab_architecture.png[Architecture Overview, width=100%]
 == About the Technology Stack  
 
 This solution uses **Red Hat Service Interconnect (RHSI)** and **InstructLab** to secure AI model deployment. **OpenShift** ensures flexible scaling of the chatbot service, while **Skupper** enables seamless and secure communication between the isolated sites, creating a robust hybrid cloud environment for AI-driven applications.
-
-include::03-demo.adoc[]
-

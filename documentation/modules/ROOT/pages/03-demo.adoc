@@ -1,8 +1,3 @@
-= Solution Pattern: Name Template
-:sectnums:
-:sectlinks:
-:doctype: book
-
 = See the Solution in Action
 
 == Demonstration

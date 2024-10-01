@@ -1,9 +1,3 @@
-= Solution Patterns: Template Name
-:sectnums:
-:sectlinks:
-:doctype: book
-
-
 = Developer Resources
 
 * InstructLab - https://instructlab.io[InstructLab]  
