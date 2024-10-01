@@ -147,7 +147,7 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 
 === Creating the token to allow the private Skupper to connect to the public Skupper:
 
-This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:
+This is the step where you create the token to allow the private Skupper to connect to the public Skupper. At the same terminal, run the following command:
 
 [.console-input]
 [source,shell script]
@@ -169,7 +169,7 @@ The second step is to deploy the private Skupper in Site A. The private Skupper 
 
 === Install Skupper
 
-To install skupper on site A, with podman as the platform:
+To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper.
 
 [.console-input]
 [source,shell script]
@@ -221,7 +221,7 @@ Services exposed through Skupper:
 
 === Secure Communication Between the Two Sites with Skupper
 
-Now it's time to establish a secure connection between the two sites using the token created by the public Skupper. Using the token created by the public Skupper, run the following command:
+Now it's time to establish a secure connection between the two sites using the token created by the public Skupper. Using the token created by the public Skupper, run the following command at the terminal where the private Skupper is running:
 
 [.console-input]
 [source,shell script]
@@ -280,14 +280,14 @@ Current links from other sites that are connected:
 
 The last step is to expose the service in the public Skupper and create the Ollama Pilot application.
 
-* Still on the terminal where the public Skupper is running, run the following command to expose the service:
+* Still on the terminal where the **public** Skupper is running, run the following command to expose the service:
 
 [.console-input]
 [source,shell script]
 ----
 skupper service create instructlab 8000
 ----
-* Exposing the service to the internet:
+* Exposing the service to the internet, this command will be executed on the terminal where the **public** Skupper is running and will create a route to expose the service to the internet:
 
 [.console-input]
 [source,shell script]
@@ -320,7 +320,9 @@ instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab        
 
 == Finally, to interact with the chatbot
 
-Let's interact with the chatbot. Run the following command to start the chatbot:
+Let's interact with the chatbot. Run the following command to start the chatbot, since we are ilab, we will need another machine with ilab installed, or as in this case, we will use the same machine to interact with the chatbot, the idea here is to simulate the interaction between the user and the chatbot thru a service exposed by the public Skupper.
+
+Run this command in a terminal where the virtual environment is activated, in our case ~/instructlab directory:
 
 [.console-input]
 [source,shell script]
