@@ -413,7 +413,7 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 <div class="sect2">
 <h3 id="_creating_the_token_to_allow_the_private_skupper_to_connect_to_the_public_skupper"><a class="anchor" href="#_creating_the_token_to_allow_the_private_skupper_to_connect_to_the_public_skupper"></a>Creating the token to allow the private Skupper to connect to the public Skupper:</h3>
 <div class="paragraph">
-<p>This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:</p>
+<p>This is the step where you create the token to allow the private Skupper to connect to the public Skupper. At the same terminal, run the following command:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -456,7 +456,7 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 <div class="sect2">
 <h3 id="_install_skupper"><a class="anchor" href="#_install_skupper"></a>Install Skupper</h3>
 <div class="paragraph">
-<p>To install skupper on site A, with podman as the platform:</p>
+<p>To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -559,7 +559,7 @@ Services exposed through Skupper:
 <div class="sect2">
 <h3 id="_secure_communication_between_the_two_sites_with_skupper"><a class="anchor" href="#_secure_communication_between_the_two_sites_with_skupper"></a>Secure Communication Between the Two Sites with Skupper</h3>
 <div class="paragraph">
-<p>Now it&#8217;s time to establish a secure connection between the two sites using the token created by the public Skupper. Using the token created by the public Skupper, run the following command:</p>
+<p>Now it&#8217;s time to establish a secure connection between the two sites using the token created by the public Skupper. Using the token created by the public Skupper, run the following command at the terminal where the private Skupper is running:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -661,7 +661,7 @@ Current links from other sites that are connected:
 <div class="ulist">
 <ul>
 <li>
-<p>Still on the terminal where the public Skupper is running, run the following command to expose the service:</p>
+<p>Still on the terminal where the <strong>public</strong> Skupper is running, run the following command to expose the service:</p>
 </li>
 </ul>
 </div>
@@ -673,7 +673,7 @@ Current links from other sites that are connected:
 <div class="ulist">
 <ul>
 <li>
-<p>Exposing the service to the internet:</p>
+<p>Exposing the service to the internet, this command will be executed on the terminal where the <strong>public</strong> Skupper is running and will create a route to expose the service to the internet:</p>
 </li>
 </ul>
 </div>
@@ -745,7 +745,10 @@ instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab        
 <h2 id="_finally_to_interact_with_the_chatbot"><a class="anchor" href="#_finally_to_interact_with_the_chatbot"></a>Finally, to interact with the chatbot</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s interact with the chatbot. Run the following command to start the chatbot:</p>
+<p>Let&#8217;s interact with the chatbot. Run the following command to start the chatbot, since we are ilab, we will need another machine with ilab installed, or as in this case, we will use the same machine to interact with the chatbot, the idea here is to simulate the interaction between the user and the chatbot thru a service exposed by the public Skupper.</p>
+</div>
+<div class="paragraph">
+<p>Run this command in a terminal where the virtual environment is activated, in our case ~/instructlab directory:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
