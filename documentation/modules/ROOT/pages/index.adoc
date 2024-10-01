@@ -1,4 +1,4 @@
-= Solution Patterns: Template Name
+= Exposing Local AI Models While Keeping Data Protected  
 :page-layout: home
 :sectnums:
 :sectlinks:
