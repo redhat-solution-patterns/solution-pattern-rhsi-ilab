@@ -25,7 +25,6 @@ Please make sure to explain what each Skupper command does the first time you us
 
 ====
 
-
 == Run the demonstration
 
 === AI Model Deployment with InstructLab
@@ -179,7 +178,6 @@ To install skupper on site A, with podman as the platform:
 export SKUPPER_PLATFORM=podman
 skupper init --ingress none
 ----
-
 
 [NOTE]
 ====
