@@ -21,3 +21,6 @@ Key components of the solution include:
 - **InstructLab** for managing and serving AI models within a secure, private infrastructure.
 - **Red Hat Service Interconnect (RHSI)** and **Skupper** to establish secure, seamless communication between isolated sites and public environments.
 - A **Virtual Application Network (VAN)** that securely connects two sites: a private site hosting the AI model and a public OpenShift site that exposes the chatbot service to external users.
+
+
+include::02-architecture.adoc[]

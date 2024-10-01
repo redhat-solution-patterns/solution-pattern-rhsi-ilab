@@ -1,8 +1,3 @@
-= Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper  
-:sectnums:  
-:sectlinks:  
-:doctype: book  
-
 = Architecture  
 
 This architecture outlines a solution for securely deploying a local AI chatbot using **InstructLab** and **Skupper**, while ensuring data privacy and seamless communication between isolated environments. The model is hosted in a private environment, and the service is exposed through a public OpenShift deployment, allowing external access while safeguarding the underlying data and models.
@@ -66,4 +61,6 @@ image::instructlab_architecture.png[Architecture Overview, width=100%]
 == About the Technology Stack  
 
 This solution uses **Red Hat Service Interconnect (RHSI)** and **InstructLab** to secure AI model deployment. **OpenShift** ensures flexible scaling of the chatbot service, while **Skupper** enables seamless and secure communication between the isolated sites, creating a robust hybrid cloud environment for AI-driven applications.
+
+include::03-demo.adoc[]
 
