@@ -114,6 +114,57 @@ INFO 2024-07-30 18:59:01,611 server.py:218: server Starting server process, pres
 INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup complete see http://0.0.0.0:8000/docs for API.
 ----
 
+== Public Skupper Deployment
+
+Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
+
+=== Creating the project and deploying the public Skupper:
+
+This is the step where you create the project and deploy the public Skupper. The public Skupper will be responsible for receiving the connection from the private Skupper and creating a secure connection between the two sites. Open a new terminal and run the following commands:
+
+
+[.console-input]
+[source,shell script]
+----
+export SKUPPER_PLATFORM=kubernetes
+oc new-project ollama-pilot
+skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
+----
+
+[IMPORTANT]
+====
+* Run this command in a new terminal and keep it open, because the default platform is `kubernetes` and the private terminal is using `podman`.
+====
+
+[NOTE]
+====
+* `SKUPPER_PLATFORM=kubernetes` is used to set the platform to Kubernetes. This is necessary because the public Skupper will be running on a Kubernetes cluster.
+* `oc new-project ollama-pilot` is used to create a new project called `ollama-pilot`.
+* `skupper init` is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.
+* The `--enable-console` flag is used to enable the Skupper console, which provides a web interface for managing the Skupper network.
+* The `--enable-flow-collector` flag is used to enable the flow collector, which collects and displays information about the traffic flowing through the Skupper network.
+* The `--console-user admin` flag is used to set the username for the Skupper console to `admin`.
+* The `--console-password admin` flag is used to set the password for the Skupper console to `admin`.
+====
+
+=== Creating the token to allow the private Skupper to connect to the public Skupper:
+
+This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:
+
+[.console-input]
+[source,shell script]
+----
+skupper token create token.yaml
+----
+
+[NOTE]
+====
+* `skupper token create token.yaml` is used to generate a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.
+* The `token.yaml` file will contain the token to connect the two sites.
+====
+
+Now, you'll have a `token.yaml` file with the token to connect the two sites.
+
 == Private Skupper Deployment
 
 The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the LLaMA3 model and receive the response from the merlinite model. Open a new terminal and run the following commands:
@@ -171,60 +222,9 @@ Services exposed through Skupper:
 * `skupper service status` is used to display the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.
 ====
 
-== Public Skupper Deployment
-
-Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
-
-=== Creating the project and deploying the public Skupper:
-
-This is the step where you create the project and deploy the public Skupper. The public Skupper will be responsible for receiving the connection from the private Skupper and creating a secure connection between the two sites. Open a new terminal and run the following commands:
-
-
-[.console-input]
-[source,shell script]
-----
-export SKUPPER_PLATFORM=kubernetes
-oc new-project ollama-pilot
-skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
-----
-
-[IMPORTANT]
-====
-* Run this command in a new terminal and keep it open, because the default platform is `kubernetes` and the private terminal is using `podman`.
-====
-
-[NOTE]
-====
-* `SKUPPER_PLATFORM=kubernetes` is used to set the platform to Kubernetes. This is necessary because the public Skupper will be running on a Kubernetes cluster.
-* `oc new-project ollama-pilot` is used to create a new project called `ollama-pilot`.
-* `skupper init` is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.
-* The `--enable-console` flag is used to enable the Skupper console, which provides a web interface for managing the Skupper network.
-* The `--enable-flow-collector` flag is used to enable the flow collector, which collects and displays information about the traffic flowing through the Skupper network.
-* The `--console-user admin` flag is used to set the username for the Skupper console to `admin`.
-* The `--console-password admin` flag is used to set the password for the Skupper console to `admin`.
-====
-
-=== Creating the token to allow the private Skupper to connect to the public Skupper:
-
-This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:
-
-[.console-input]
-[source,shell script]
-----
-skupper token create token.yaml
-----
-
-[NOTE]
-====
-* `skupper token create token.yaml` is used to generate a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.
-* The `token.yaml` file will contain the token to connect the two sites.
-====
-
-Now, you'll have a `token.yaml` file with the token to connect the two sites.
-
 === Secure Communication Between the Two Sites with Skupper
 
-Now it's time to establish a secure connection between the two sites using the token created by the public Skupper. At the terminal where the private Skupper is running, run the following command to link the two sites:
+Now it's time to establish a secure connection between the two sites using the token created by the public Skupper. Using the token created by the public Skupper, run the following command:
 
 [.console-input]
 [source,shell script]
@@ -337,7 +337,7 @@ ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster
 ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ I am an AI Language Model from IBM Research, trained to assist with various tasks such as answering questions, translating text, summarizing long documents, and even explaining complex concepts. I am here to help make your life easier!                                                                                │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 14.291 seconds ─╯
->>> What is Red Hat Service Interconnect                                                                                                                                                                                                                                                                          [S][default]
+>>> What is Red Hat Service Interconnect?                                                                                                                                                                                                                                                                         [S][default]
 ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Red Hat Service Interconnect (RHSI) is a software-defined networking solution that allows organizations to create secure, high-performance networks between their on-premises environments and various cloud resources. It enables seamless communication between different data centers, public clouds (such as Amazon    │
 │ Web Services or Microsoft Azure), and even edge devices (such as IoT gateways or mobile applications). RHSI offers the following key features:                                                                                                                                                                             │
