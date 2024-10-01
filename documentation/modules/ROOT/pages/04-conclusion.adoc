@@ -1,4 +1,3 @@
-= Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper  
 :sectnums:  
 :sectlinks:  
 :doctype: book  
