@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Solution Pattern: Name Template :: Solution Patterns for Cloud Native Architectures</title>
+    <title>Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper :: Solution Patterns for Cloud Native Architectures</title>
     <link rel="canonical" href="https://redhat-solution-patterns.github.io/solution-patterns/solution-pattern-template/02-architecture.html">
     <link rel="prev" href="index.html">
     <link rel="next" href="03-demo.html">
@@ -178,21 +178,63 @@
     <li><a href="02-architecture.html">2. Architecture</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-solution-patterns/solution-pattern-website-template/edit/main/documentation/modules/ROOT/pages/02-architecture.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/rafaelvzago/solution-rhsi-ilab/edit/main/documentation/modules/ROOT/pages/02-architecture.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Solution Pattern: Name Template</h1>
+<h1 class="page">Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper</h1>
 <h1 id="_architecture" class="sect0"><a class="anchor" href="#_architecture"></a><a class="link" href="#_architecture">Architecture</a></h1>
 <div class="openblock partintro">
 <div class="content">
-Introduction for the architecture of this solution pattern.
+<div class="paragraph">
+<p>This architecture outlines a solution for securely deploying a local AI chatbot using <strong>InstructLab</strong> and <strong>Skupper</strong>, while ensuring data privacy and seamless communication between isolated environments. The model is hosted in a private environment, and the service is exposed through a public OpenShift deployment, allowing external access while safeguarding the underlying data and models.</p>
+</div>
+<div class="paragraph">
+<p>The core elements include:
+- <strong>InstructLab</strong> for hosting, training, and serving the AI model in a secure environment.
+- <strong>Red Hat Service Interconnect (RHSI)</strong> combined with <strong>Skupper</strong> to create a <strong>Virtual Application Network (VAN)</strong> between private and public sites, enabling secure communication.
+- <strong>OpenShift</strong> for exposing the chatbot to external users while maintaining scalability and secure connectivity to the model.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This solution enables secure communication between services hosted in different environments using <strong>Skupper</strong> and <strong>Red Hat Service Interconnect</strong>, ensuring data privacy and secure model serving.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_architecture_diagram"><a class="anchor" href="#_architecture_diagram"></a><a class="link" href="#_architecture_diagram">.1. Architecture Diagram</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="_images/instructlab_skupper.png" alt="Architecture Overview" width="100%">
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_common_challenges"><a class="anchor" href="#_common_challenges"></a><a class="link" href="#_common_challenges">1. Common Challenges</a></h2>
 <div class="sectionbody">
-
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Secure Model Hosting</strong>: Protecting sensitive AI models while allowing controlled external access.</p>
+</li>
+<li>
+<p><strong>Hybrid Connectivity</strong>: Facilitating communication between private and public environments without compromising security.</p>
+</li>
+<li>
+<p><strong>Data Privacy</strong>: Ensuring that private data remains in a protected environment while providing real-time AI responses to external users.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -201,37 +243,20 @@ Introduction for the architecture of this solution pattern.
 <div class="ulist">
 <ul>
 <li>
-<p>Red Hat supported products</p>
+<p><strong>Red Hat supported products</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a></p>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>
+Red Hat OpenShift is a Kubernetes-based container platform that allows developers to build, deploy, and manage containerized applications. It provides a robust platform for scaling and automating applications across hybrid cloud environments, ensuring reliability and security.</p>
 </li>
 <li>
-<p>Red Hat Application Foundation</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://access.redhat.com/products/quarkus">Quarkus</a></p>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/service-interconnect">Red Hat Service Interconnect (RHSI)</a>
+Red Hat Service Interconnect (RHSI) enables secure communication between services across different environments. Using a Virtual Application Network (VAN), it ensures that services in private, public, and hybrid cloud environments can seamlessly interact without exposing sensitive data directly.</p>
 </li>
 <li>
-<p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-streams-for-apache-kafka">Kafka Streams</a></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Other open source products:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://www.postgresql.org/">PostgreSQL database</a></p>
-</li>
-<li>
-<p><a href="https://helm.sh/">Helm</a></p>
+<p><a href="https://instructlab.ai/">InstructLab</a>
+InstructLab is an AI model platform that simplifies the process of training, serving, and managing large language models. It is designed to be flexible and secure, making it ideal for environments where models need to remain private but still serve external requests through controlled access paths.</p>
 </li>
 </ul>
 </div>
@@ -244,151 +269,30 @@ Introduction for the architecture of this solution pattern.
 <h2 id="in_depth"><a class="anchor" href="#in_depth"></a><a class="link" href="#in_depth">3. An in-depth look at the solution&#8217;s architecture</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Technical description including all or some of the following: architecture ir ed diagrams. In-depth details of the decisions made and solutions used. Description of each service and what it is used for. Description of any integration.</p>
+<p>This architecture is based on a hybrid setup where the AI model is trained and served via <strong>InstructLab</strong> in a private environment (Site A) and can only be accessed by external users through a public <strong>OpenShift</strong> site (Site B), using <strong>Skupper</strong> for secure communication. The <strong>Red Hat Service Interconnect (RHSI)</strong> ensures that data exchanged between these two environments remains secure, creating a <strong>Virtual Application Network (VAN)</strong> between the sites.</p>
 </div>
-<div class="sect2">
-<h3 id="_using_images"><a class="anchor" href="#_using_images"></a><a class="link" href="#_using_images">3.1. Using images</a></h3>
+<div class="paragraph">
+<p><strong>Site A</strong> hosts the AI model using InstructLab and is responsible for:
+- Receiving user input exclusively from Site B (OpenShift).
+- Sending the input to the LLaMA3 model for processing.
+- Returning the model&#8217;s response to Site B securely.</p>
+</div>
+<div class="paragraph">
+<p><strong>Site B</strong> (OpenShift) serves as the only access point for external clients and is responsible for:
+- Exposing the AI chatbot to external users.
+- Sending requests to the private InstructLab model in Site A.
+- Displaying the AI response from the model hosted in Site A.</p>
+</div>
+<div class="paragraph">
+<p>By design, the model running in the private environment (Site A) is isolated and cannot be accessed directly by external clients. All interactions with the model are mediated by <strong>OpenShift</strong> (Site B), ensuring a secure and controlled access path.</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/red_hat_open-hybrid-cloud.png" alt="red hat open hybrid cloud" width="30%">
+<img src="_images/instructlab_architecture.png" alt="Architecture Overview" width="100%">
 </div>
 </div>
 <div class="paragraph">
 <p></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_embedding_html"><a class="anchor" href="#_embedding_html"></a><a class="link" href="#_embedding_html">3.2. Embedding HTML</a></h3>
-  <br>
-  <h3> Embed HTML by surrounding it with with four +s before and after. </h3>
-  <span>View the ascii doc to learn more</span>
-  <br>
-</div>
-<div class="sect2">
-<h3 id="_different_decorators"><a class="anchor" href="#_different_decorators"></a><a class="link" href="#_different_decorators">3.3. Different decorators</a></h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This is a Tip</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This is a NOTE</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This is a WARNING</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This is IMPORTANT</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_creating_tables"><a class="anchor" href="#_creating_tables"></a><a class="link" href="#_creating_tables">3.4. Creating  tables</a></h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Column A</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Column <strong>A</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><em>Column C</em></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-<li>
-<p>Lorem Ipsum</p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_content_that_can_be_copied"><a class="anchor" href="#_content_that_can_be_copied"></a><a class="link" href="#_content_that_can_be_copied">3.5. Content that can be copied</a></h3>
-<div class="paragraph">
-<p>Click below to copy the content</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc version #openshift cli client
-oc login --token=&lt;token&gt; --server=&lt;server&gt;</code></pre>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -396,7 +300,7 @@ oc login --token=&lt;token&gt; --server=&lt;server&gt;</code></pre>
 <h2 id="more_tech"><a class="anchor" href="#more_tech"></a><a class="link" href="#more_tech">4. About the Technology Stack</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to include more details about the tech stack you used, this is the place.</p>
+<p>This solution uses <strong>Red Hat Service Interconnect (RHSI)</strong> and <strong>InstructLab</strong> to secure AI model deployment. <strong>OpenShift</strong> ensures flexible scaling of the chatbot service, while <strong>Skupper</strong> enables seamless and secure communication between the isolated sites, creating a robust hybrid cloud environment for AI-driven applications.</p>
 </div>
 </div>
 </div>

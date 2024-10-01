@@ -172,7 +172,7 @@
   <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-solution-patterns/solution-pattern-website-template/edit/main/documentation/modules/ROOT/pages/01-pattern.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/rafaelvzago/solution-rhsi-ilab/edit/main/documentation/modules/ROOT/pages/01-pattern.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -180,7 +180,16 @@
 <h2 id="_the_story_behind_this_solution_pattern"><a class="anchor" href="#_the_story_behind_this_solution_pattern"></a>The story behind this solution pattern</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A description of the story that was used to build the demo and architectures of this SP.</p>
+<p>The increasing demand for AI-driven applications presents a unique challenge: how to securely deploy and operate AI models within environments that require strict data protection, while still exposing these models to public-facing services. This need became evident during the development of a local AI chatbot that would handle sensitive, proprietary data, requiring a solution where the model could be kept inside a protected environment.</p>
+</div>
+<div class="paragraph">
+<p>Leveraging <strong>Red Hat Service Interconnect (RHSI)</strong>, the team developed a pattern where AI models, served via <strong>InstructLab</strong>, are isolated within private infrastructure but exposed through secure connections into public <strong>OpenShift</strong> environments. The goal was to maintain strict control over the data and model security while providing the flexibility to scale and serve user requests externally.</p>
+</div>
+<div class="paragraph">
+<p>This solution pattern was born from the necessity to balance security, performance, and accessibility, particularly for organizations looking to adopt hybrid cloud strategies. By integrating <strong>Skupper</strong> with <strong>Red Hat Service Interconnect</strong>, the team enabled seamless communication between private and public environments without sacrificing data protection or operational efficiency.</p>
+</div>
+<div class="paragraph">
+<p>This architecture ensures that companies can continue to innovate in AI and machine learning while adhering to compliance and security standards, making it ideal for industries such as healthcare, finance, and any domain where data security is paramount.</p>
 </div>
 </div>
 </div>
@@ -188,7 +197,26 @@
 <h2 id="_the_solution"><a class="anchor" href="#_the_solution"></a>The Solution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is a summary of the solution</p>
+<p><strong>Summary of the Solution</strong></p>
+</div>
+<div class="paragraph">
+<p>This solution pattern demonstrates how to securely deploy and serve a local AI chatbot using <strong>Red Hat Service Interconnect</strong> and <strong>InstructLab</strong>. The architecture enables the training and serving of AI models in a protected environment, ensuring sensitive data remains secure while still exposing the chatbot service to public users through an OpenShift environment.</p>
+</div>
+<div class="paragraph">
+<p>Key components of the solution include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>InstructLab</strong> for managing and serving AI models within a secure, private infrastructure.</p>
+</li>
+<li>
+<p><strong>Red Hat Service Interconnect (RHSI)</strong> and <strong>Skupper</strong> to establish secure, seamless communication between isolated sites and public environments.</p>
+</li>
+<li>
+<p>A <strong>Virtual Application Network (VAN)</strong> that securely connects two sites: a private site hosting the AI model and a public OpenShift site that exposes the chatbot service to external users.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
