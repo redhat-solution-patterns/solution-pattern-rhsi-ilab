@@ -14,7 +14,7 @@ This solution enables secure communication between services hosted in different 
 
 === Architecture Diagram  
 
-image::instructlab_skupper.png[Architecture Overview, width=100%]
+image::instructlab_skupper.jpg[Architecture Overview, width=100%]
 
 == Common Challenges  
 
