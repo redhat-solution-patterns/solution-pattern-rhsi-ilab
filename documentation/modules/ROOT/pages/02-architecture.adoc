@@ -14,7 +14,7 @@ This solution enables secure communication between services hosted in different 
 
 === Architecture Diagram  
 
-image::instructlab_skupper.jpg[Architecture Overview, width=100%]
+image::instructlab_skupper.png[Architecture Overview, width=100%]
 
 == Common Challenges  
 
@@ -52,7 +52,7 @@ This architecture is based on a hybrid setup where the AI model is trained and s
 
 By design, the model running in the private environment (Site A) is isolated and cannot be accessed directly by external clients. All interactions with the model are mediated by **OpenShift** (Site B), ensuring a secure and controlled access path.
 
-image::instructlab_architecture.png[Architecture Overview, width=100%]
+image::instructlab_architecture.jpg[Architecture Overview, width=100%]
 
 {empty}  
 
