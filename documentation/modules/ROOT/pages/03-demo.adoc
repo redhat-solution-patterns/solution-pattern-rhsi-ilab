@@ -6,7 +6,9 @@ References:
 
 * https://github.com/instructlab[Commands extract from the InstructLab project]
 * https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting started with InstructLab: Generative AI model tuning]
-* https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab installation guide]
+* https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab installation guide]
+* https://github.com/rafaelvzago/ilab-client[ILAB Frontend chatbot]
+* https://developers.redhat.com[Red Hat Developer]
 
 == Concepts and Commands Used in the Demonstration
 
@@ -320,38 +322,147 @@ instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab        
 
 == Finally, to interact with the chatbot
 
-Let's interact with the chatbot. Run the following command to start the chatbot, since we are ilab, we will need another machine with ilab installed, or as in this case, we will use the same machine to interact with the chatbot, the idea here is to simulate the interaction between the user and the chatbot thru a service exposed by the public Skupper.
+Before run the chatbot, let's understand the final part of this solution, the Frontend application.
 
-Run this command in a terminal where the virtual environment is activated, in our case ~/instructlab directory:
+This application will be deployed in a OpenShift cluster, and will be responsible for sending the user input to the InstructLab chat model and displaying the response to the user. The application will be deployed at the same namespace where the public Skupper is running.
+
+=== Deploy ILAB Frontend chatbot
+
+To deploy the ILAB Frontend chatbot, lets use the following yaml deployment file, in this case the file is located at `~/instructlab/ilab-client-deployment.yaml`:
+
+[.source,yaml]
+----
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: ilab-client
+spec:
+  replicas: 1
+  selector:
+    app: ilab-client
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ilab-client
+    spec:
+      containers:
+      - name: ilab-client-container
+        image: quay.io/rzago/ilab-client:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ADDRESS
+          value: "http://instructlab:8000" # The address of the InstructLab chat model connected to the private Skupper
+  triggers:
+  - type: ConfigChange
+----
+
+Apply the deployment file:
 
 [.console-input]
 [source,shell script]
 ----
-ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/
-
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── system ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Welcome to InstructLab Chat w/ MODELS/MERLINITE-7B-LAB-Q4_K_M.GGUF (type /h for help)                                                                                                                                                                                                                                      │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
->>> Hello, who are you?                                                                                                                                                                                                                                                                                           [S][default]
-╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ I am an AI Language Model from IBM Research, trained to assist with various tasks such as answering questions, translating text, summarizing long documents, and even explaining complex concepts. I am here to help make your life easier!                                                                                │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 14.291 seconds ─╯
->>> What is Red Hat Service Interconnect?                                                                                                                                                                                                                                                                         [S][default]
-╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Red Hat Service Interconnect (RHSI) is a software-defined networking solution that allows organizations to create secure, high-performance networks between their on-premises environments and various cloud resources. It enables seamless communication between different data centers, public clouds (such as Amazon    │
-│ Web Services or Microsoft Azure), and even edge devices (such as IoT gateways or mobile applications). RHSI offers the following key features:                                                                                                                                                                             │
-│                                                                                                                                                                                                                                                                                                                            │
-│ 1. **Security**: RHSI ensures secure communication between different environments by employing advanced encryption algorithms like IPSEC and TLS. It also supports virtual private cloud (VPC) concepts for creating isolated networking environments within public clouds.                                                │
-│ 2. **Performance**: RHSI provides high-bandwidth, low-latency network connections. This makes it suitable for handling large data transfers or real-time applications like video streaming and gaming.                                                                                                                     │
-│ 3. **Flexibility**: RHSI supports a wide range of networking protocols such as IPv4, IPv6, and even overlay networks (such as OpenFlow). This allows organizations to build complex networking topologies that cater to their specific needs.                                                                              │
-│ 4. **Automation**: RHSI offers programmable network interfaces, enabling automated provisioning and management of networking resources. This reduces the administrative overhead and improves operational efficiency.                                                                                                      │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 94.969 seconds ─╯
->>>              
+oc apply -f ~/instructlab/ilab-client-deployment.yaml
 ----
 
 [NOTE]
 ====
-* `ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/` is used to start the chatbot, allowing the user to interact with it.
-* The chatbot will respond to the user input by sending it to the LLaMA3 model and returning the response back to the user.
+* The `ilab-client-deployment.yaml` file is used to deploy the ILAB Frontend chatbot, which will be responsible for sending the user input to the InstructLab chat model and displaying the response to the user.
+* The `ADDRESS` environment variable is used to specify the address of the InstructLab chat model connected to the private Skupper.
+* The `oc apply -f ~/instructlab/ilab-client-deployment.yaml` command is used to apply the deployment file and deploy the ILAB Frontend chatbot.
 ====
 
+=== Creating the service of the ILAB Frontend chatbot deployment
+
+Now, let's create the service for the ILAB Frontend chatbot deployment, the file is located at `~/instructlab/ilab-client-service.yaml`:
+
+[.source,yaml]
+----
+apiVersion: v1
+kind: Service
+metadata:
+  name: ilab-client-service
+spec:
+  selector:
+    app: ilab-client
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+----
+
+Apply the service file:
+
+[.console-input]
+[source,shell script]
+----
+oc apply -f ~/instructlab/ilab-client-service.yaml
+----
+
+[NOTE]
+====
+* The `ilab-client-service.yaml` file is used to create the service for the ILAB Frontend chatbot deployment.
+* The `oc apply -f ~/instructlab/ilab-client-service.yaml` command is used to apply the service file and create the service for the ILAB Frontend chatbot deployment.
+====
+
+=== Exposing the service of the ILAB Frontend chatbot deployment
+
+We are almost there, now let's expose the service of the ILAB Frontend chatbot deployment, the file is located at `~/instructlab/ilab-client-route.yaml`:
+
+[.source,yaml]
+----
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ilab-client-route
+spec:
+  to:
+    kind: Service
+    name: ilab-client-service
+  port:
+    targetPort: 5000
+----
+
+Apply the route file:
+
+[.console-input]
+[source,shell script]
+----
+oc apply -f ~/instructlab/ilab-client-route.yaml
+----
+
+[NOTE]
+====
+* The `ilab-client-route.yaml` file is used to expose the service of the ILAB Frontend chatbot deployment.
+* The `oc apply -f ~/instructlab/ilab-client-route.yaml` command is used to apply the route file and expose the service of the ILAB Frontend chatbot deployment.
+====
+
+=== Accessing the ILAB Frontend chatbot
+
+Finally, to access the ILAB Frontend chatbot, you can use the following command to get the public URL:
+
+[.console-input]
+[source,shell script]
+----
+oc get route ilab-client-route
+----
+
+[NOTE]
+====
+* The `oc get route ilab-client-route` command is used to get the public URL of the ILAB Frontend chatbot, which will be used to access the chatbot from the Ollama Pilot application.
+====
+
+== Interacting with the chatbot
+
+To interact with the chatbot, you can access the public URL of the ILAB Frontend chatbot using a web browser. The chatbot will be displayed on the screen, and you can start interacting with it by typing messages in the chat window.
+
+
+image::chat_bot.png[Chatbot]
+
+=== Considerations
+
+* If your machine has an Nvidia GPU, you can use the InstructLab chat model to generate responses to user input. The InstructLab chat model is a large language model trained on the Merlinite dataset and is capable of generating human-like responses to user input. By following the steps outlined in this demonstration, you can deploy the InstructLab chat model in your environment and interact with it using the ILAB Frontend chatbot. This will allow you to experience the power of generative AI models and see how they can be used to create engaging and interactive applications.
+* Adjust the model temperature to control the randomness of the responses generated by the chatbot. A lower temperature will result in more deterministic responses, while a higher temperature will result in more random responses. Experiment with different temperature values to find the right balance between coherence and creativity in the chatbot's responses. 
+* Image repository for ilab-client: https://github.com/rafaelvzago/ilab-client[rafaelvzago/ilab-client]
