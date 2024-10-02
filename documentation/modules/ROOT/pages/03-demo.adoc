@@ -66,7 +66,7 @@ chat:
   greedy_mode: false
   logs_dir: data/chatlogs
   max_tokens: null
-  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  model: models/granite-7b-lab-Q4_K_M.gguf
   session: null
   vi_mode: false
   visible_overflow: true
@@ -74,7 +74,7 @@ general:
   log_level: INFO
 generate:
   chunk_word_count: 1000
-  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  model: models/granite-7b-lab-Q4_K_M.gguf
   num_cpus: 10
   num_instructions: 100
   output_dir: generated
@@ -86,17 +86,17 @@ serve:
   gpu_layers: -1
   host_port: 0.0.0.0:8000
   max_ctx_size: 4096
-  model_path: models/merlinite-7b-lab-Q4_K_M.gguf
+  model_path: models/granite-7b-lab-Q4_K_M.gguf
 ----
 
 === Download the model
 
-Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the LLaMA3 model, which is a large language model trained on the Merlinite dataset. The model is responsible for generating the responses to the user input. To download the model, run the following command:
+Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the granite-7b-lab-Q4_K_M.gguf model, which is a large language model trained on the Merlinite dataset. To download the model, run the following command:
 
 [.console-input]
 [source,shell script]
 ----
-ilab model download
+ilab download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf
 ----
 
 === Start the server
