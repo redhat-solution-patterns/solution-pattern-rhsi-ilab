@@ -335,7 +335,7 @@ serve:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab model serve
 
 # The output should be similar to:
-INFO 2024-07-30 18:59:01,199 serve.py:51: serve Using model 'models/merlinite-7b-lab-Q4_K_M.gguf' with -1 gpu-layers and 4096 max context size.
+INFO 2024-07-30 18:59:01,199 serve.py:51: serve Using model 'models/granite-7b-lab-Q4_K_M.gguf' with -1 gpu-layers and 4096 max context size.
 INFO 2024-07-30 18:59:01,611 server.py:218: server Starting server process, press CTRL+C to shutdown server...
 INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup complete see http://0.0.0.0:8000/docs for API.</code></pre>
 </div>
@@ -457,7 +457,7 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 <h2 id="_private_skupper_deployment"><a class="anchor" href="#_private_skupper_deployment"></a>Private Skupper Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the LLaMA3 model and receive the response from the merlinite model. Open a new terminal and run the following commands:</p>
+<p>The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model.</p>
 </div>
 <div class="sect2">
 <h3 id="_install_skupper"><a class="anchor" href="#_install_skupper"></a>Install Skupper</h3>
