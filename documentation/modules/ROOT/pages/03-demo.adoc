@@ -116,7 +116,7 @@ INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup com
 
 == Public Skupper Deployment
 
-Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
+Deploy the public Skupper in Openshift Cluster. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
 
 === Creating the project and deploying the public Skupper:
 
@@ -167,7 +167,7 @@ Now, you'll have a `token.yaml` file with the token to connect the two sites.
 
 == Private Skupper Deployment
 
-The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model. 
+The second step is to deploy the private Skupper in Private Local Environment. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model. 
 
 === Install Skupper
 
@@ -289,42 +289,17 @@ The last step is to expose the service in the public Skupper and create the Olla
 ----
 skupper service create instructlab 8000
 ----
-* Exposing the service to the internet, this command will be executed on the terminal where the **public** Skupper is running and will create a route to expose the service to the internet:
-
-[.console-input]
-[source,shell script]
-----
-oc expose service instructlab
-----
-
-[NOTE]
-====
-* `skupper service create instructlab 8000` is used to create a service in the public Skupper, allowing it to be accessed from the private Skupper.
-* `oc expose service instructlab` is used to expose the service to the internet, allowing it to be accessed by the Ollama Pilot application.
-====
-
-* Getting the public URL:
-
-This URL will be used to access the chatbot from the Ollama Pilot application.
-
-[.console-input]
-[source,shell script]
-----
-oc get route instructlab
-NAME          HOST/PORT                                      PATH          SERVICES                PORT       TERMINATION   WILDCARD
-instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab                           port8000   None
-----
-
-[NOTE]
-====
-* `oc get route instructlab` is used to get the public URL of the service, which will be used to access the chatbot from the Ollama Pilot application.
-====
 
 == Finally, to interact with the chatbot
 
 Before run the chatbot, let's understand the final part of this solution, the Frontend application.
 
 This application will be deployed in a OpenShift cluster, and will be responsible for sending the user input to the InstructLab chat model and displaying the response to the user. The application will be deployed at the same namespace where the public Skupper is running.
+
+
+[IMPORTANT]
+====
+* The frontend application called ILAB Frontend chatbot will use the local service in the public cluster to send the user input to the InstructLab chat model and display the response to the user. See the line 23 of the `ilab-client-deployment.yaml` file.
 
 === Deploy ILAB Frontend chatbot
 
