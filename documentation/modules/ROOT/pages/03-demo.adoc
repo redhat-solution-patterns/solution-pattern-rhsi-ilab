@@ -29,6 +29,18 @@ Please make sure to explain what each Skupper command does the first time you us
 
 == Run the demonstration
 
+=== Before getting started
+
+To set up the demonstration, you need to have the following prerequisites:
+
+* Access to an OpenShift cluster with the Skupper and InstructLab installed.
+* A server running the InstructLab chat model.
+* Access to a terminal to run the commands.
+* Access to a web browser to interact with the chatbot.
+* oc client installed and configured to access the OpenShift cluster.
+* skupper client installed and configured to access the OpenShift cluster.
+* Podman installed to run the private Skupper.
+
 === AI Model Deployment with InstructLab
 
 The first step is to deploy the InstructLab chat model in the InstructLab site. The InstructLab chat model will be responsible for receiving the user input and sending it to the LLaMA3 model. The response from the LLaMA3 model will be sent back to the user. This is based on the article: https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting Started with InstructLab for Generative AI Model Tuning].
