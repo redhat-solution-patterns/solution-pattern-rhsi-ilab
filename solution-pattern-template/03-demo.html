@@ -347,7 +347,7 @@ INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup com
 <h2 id="_public_skupper_deployment"><a class="anchor" href="#_public_skupper_deployment"></a>Public Skupper Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.</p>
+<p>Deploy the public Skupper in Openshift Cluster. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.</p>
 </div>
 <div class="sect2">
 <h3 id="_creating_the_project_and_deploying_the_public_skupper"><a class="anchor" href="#_creating_the_project_and_deploying_the_public_skupper"></a>Creating the project and deploying the public Skupper:</h3>
@@ -457,7 +457,7 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 <h2 id="_private_skupper_deployment"><a class="anchor" href="#_private_skupper_deployment"></a>Private Skupper Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model.</p>
+<p>The second step is to deploy the private Skupper in Private Local Environment. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model.</p>
 </div>
 <div class="sect2">
 <h3 id="_install_skupper"><a class="anchor" href="#_install_skupper"></a>Install Skupper</h3>
@@ -676,74 +676,6 @@ Current links from other sites that are connected:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper service create instructlab 8000</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Exposing the service to the internet, this command will be executed on the terminal where the <strong>public</strong> Skupper is running and will create a route to expose the service to the internet:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc expose service instructlab</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p><code>skupper service create instructlab 8000</code> is used to create a service in the public Skupper, allowing it to be accessed from the private Skupper.</p>
-</li>
-<li>
-<p><code>oc expose service instructlab</code> is used to expose the service to the internet, allowing it to be accessed by the Ollama Pilot application.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Getting the public URL:</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This URL will be used to access the chatbot from the Ollama Pilot application.</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc get route instructlab
-NAME          HOST/PORT                                      PATH          SERVICES                PORT       TERMINATION   WILDCARD
-instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab                           port8000   None</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p><code>oc get route instructlab</code> is used to get the public URL of the service, which will be used to access the chatbot from the Ollama Pilot application.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -756,8 +688,23 @@ instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab        
 <div class="paragraph">
 <p>This application will be deployed in a OpenShift cluster, and will be responsible for sending the user input to the InstructLab chat model and displaying the response to the user. The application will be deployed at the same namespace where the public Skupper is running.</p>
 </div>
-<div class="sect2">
-<h3 id="_deploy_ilab_frontend_chatbot"><a class="anchor" href="#_deploy_ilab_frontend_chatbot"></a>Deploy ILAB Frontend chatbot</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The frontend application called ILAB Frontend chatbot will use the local service in the public cluster to send the user input to the InstructLab chat model and display the response to the user. See the line 23 of the <code>ilab-client-deployment.yaml</code> file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>=== Deploy ILAB Frontend chatbot</p>
+</div>
 <div class="paragraph">
 <p>To deploy the ILAB Frontend chatbot, lets use the following yaml deployment file, in this case the file is located at <code>~/instructlab/ilab-client-deployment.yaml</code>:</p>
 </div>
@@ -798,13 +745,10 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-deployment.yaml</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
 </td>
-<td class="content">
+</tr>
+</table>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -818,13 +762,11 @@ spec:
 </li>
 </ul>
 </div>
-</td>
-</tr>
-</table>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>=== Creating the service of the ILAB Frontend chatbot deployment</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_creating_the_service_of_the_ilab_frontend_chatbot_deployment"><a class="anchor" href="#_creating_the_service_of_the_ilab_frontend_chatbot_deployment"></a>Creating the service of the ILAB Frontend chatbot deployment</h3>
 <div class="paragraph">
 <p>Now, let&#8217;s create the service for the ILAB Frontend chatbot deployment, the file is located at <code>~/instructlab/ilab-client-service.yaml</code>:</p>
 </div>
@@ -851,13 +793,8 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-service.yaml</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -868,13 +805,11 @@ spec:
 </li>
 </ul>
 </div>
-</td>
-</tr>
-</table>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>=== Exposing the service of the ILAB Frontend chatbot deployment</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_exposing_the_service_of_the_ilab_frontend_chatbot_deployment"><a class="anchor" href="#_exposing_the_service_of_the_ilab_frontend_chatbot_deployment"></a>Exposing the service of the ILAB Frontend chatbot deployment</h3>
 <div class="paragraph">
 <p>We are almost there, now let&#8217;s expose the service of the ILAB Frontend chatbot deployment, the file is located at <code>~/instructlab/ilab-client-route.yaml</code>:</p>
 </div>
@@ -900,13 +835,8 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-route.yaml</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -917,13 +847,11 @@ spec:
 </li>
 </ul>
 </div>
-</td>
-</tr>
-</table>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>=== Accessing the ILAB Frontend chatbot</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_accessing_the_ilab_frontend_chatbot"><a class="anchor" href="#_accessing_the_ilab_frontend_chatbot"></a>Accessing the ILAB Frontend chatbot</h3>
 <div class="paragraph">
 <p>Finally, to access the ILAB Frontend chatbot, you can use the following command to get the public URL:</p>
 </div>
@@ -932,13 +860,8 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc get route ilab-client-route</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -946,16 +869,11 @@ spec:
 </li>
 </ul>
 </div>
-</td>
-</tr>
-</table>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>== Interacting with the chatbot</p>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_interacting_with_the_chatbot"><a class="anchor" href="#_interacting_with_the_chatbot"></a>Interacting with the chatbot</h2>
-<div class="sectionbody">
 <div class="paragraph">
 <p>To interact with the chatbot, you can access the public URL of the ILAB Frontend chatbot using a web browser. The chatbot will be displayed on the screen, and you can start interacting with it by typing messages in the chat window.</p>
 </div>
@@ -964,8 +882,9 @@ spec:
 <img src="_images/chat_bot.png" alt="Chatbot">
 </div>
 </div>
-<div class="sect2">
-<h3 id="_considerations"><a class="anchor" href="#_considerations"></a>Considerations</h3>
+<div class="paragraph">
+<p>=== Considerations</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -978,6 +897,7 @@ spec:
 <p>Image repository for ilab-client: <a href="https://github.com/rafaelvzago/ilab-client">rafaelvzago/ilab-client</a></p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>
