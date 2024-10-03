@@ -243,6 +243,37 @@
 <h2 id="_run_the_demonstration"><a class="anchor" href="#_run_the_demonstration"></a>Run the demonstration</h2>
 <div class="sectionbody">
 <div class="sect2">
+<h3 id="_before_getting_started"><a class="anchor" href="#_before_getting_started"></a>Before getting started</h3>
+<div class="paragraph">
+<p>To set up the demonstration, you need to have the following prerequisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to an OpenShift cluster with the Skupper and InstructLab installed.</p>
+</li>
+<li>
+<p>A server running the InstructLab chat model.</p>
+</li>
+<li>
+<p>Access to a terminal to run the commands.</p>
+</li>
+<li>
+<p>Access to a web browser to interact with the chatbot.</p>
+</li>
+<li>
+<p>oc client installed and configured to access the OpenShift cluster.</p>
+</li>
+<li>
+<p>skupper client installed and configured to access the OpenShift cluster.</p>
+</li>
+<li>
+<p>Podman installed to run the private Skupper.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_ai_model_deployment_with_instructlab"><a class="anchor" href="#_ai_model_deployment_with_instructlab"></a>AI Model Deployment with InstructLab</h3>
 <div class="paragraph">
 <p>The first step is to deploy the InstructLab chat model in the InstructLab site. The InstructLab chat model will be responsible for receiving the user input and sending it to the LLaMA3 model. The response from the LLaMA3 model will be sent back to the user. This is based on the article: <a href="https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab">Getting Started with InstructLab for Generative AI Model Tuning</a>.</p>
