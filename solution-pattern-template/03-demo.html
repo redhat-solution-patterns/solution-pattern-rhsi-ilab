@@ -98,20 +98,35 @@
     <a class="nav-link" href="03-demo.html">3. See the Solution in Action</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#_demonstration">3.1. Demonstration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#_run_the_demonstration">3.2. Run this demonstration</a>
+    <a class="nav-link" href="#_demonstration">3.1. Demonstration</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#_before_getting_started">3.3. Pre-requisites</a>
+    <a class="nav-link" href="#_before_getting_started">3.2. Pre-requisites</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#_installing_the_demo">3.4. Installing the demo</a>
+    <a class="nav-link" href="#_getting_started">3.3. Getting started</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#_walkthrough_guide">3.5. Walkthrough guide</a>
+    <a class="nav-link" href="#_ai_model_deployment_with_instructlab">3.4. AI model deployment with InstructLab</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_training_the_model">3.5. Training the model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_public_skupper_deployment">3.6. Public Skupper deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_private_skupper_deployment">3.7. Private Skupper deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_deploying_instructlab_chatbot">3.8. Deploying InstructLab Chatbot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_interacting_with_the_chatbot">3.9. Interacting with the chatbot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_considerations">3.10. Considerations</a>
   </li>
 </ul>
   </li>
@@ -240,7 +255,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_run_the_demonstration"><a class="anchor" href="#_run_the_demonstration"></a>Run the demonstration</h2>
+<h2 id="_demonstration"><a class="anchor" href="#_demonstration"></a>Run the demonstration</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_before_getting_started"><a class="anchor" href="#_before_getting_started"></a>Before getting started</h3>
@@ -359,7 +374,7 @@ serve:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_training_the_model_optional"><a class="anchor" href="#_training_the_model_optional"></a>Training the model (Optional)</h2>
+<h2 id="_training_the_model"><a class="anchor" href="#_training_the_model"></a>Training the model (Optional)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now you have 2 options to train the model, you can use the InstructLab to train the model or you can use the pre-trained model. In this case, we will use the pre-trained model. The next steps into this section are optional, we will work with the model alignment and training with InstructLab. If dont want to train the model, please skip this section.</p>
@@ -917,11 +932,29 @@ Current links from other sites that are connected:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper service create instructlab 8000</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper service create instructlab 8000</code> is used to create the service in the public Skupper, allowing it to be accessed from the private Skupper.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_finally_to_interact_with_the_chatbot"><a class="anchor" href="#_finally_to_interact_with_the_chatbot"></a>Finally, to interact with the chatbot</h2>
+<h2 id="_deploying_instructlab_chatbot"><a class="anchor" href="#_deploying_instructlab_chatbot"></a>Deploying the InstructLab Chatbot</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Before run the chatbot, let&#8217;s understand the final part of this solution, the Frontend application.</p>
