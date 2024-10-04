@@ -27,8 +27,10 @@ Please make sure to explain what each Skupper command does the first time you us
 
 ====
 
+[#_demonstration]
 == Run the demonstration
 
+[#_before_getting_started]
 === Before getting started
 
 To set up the demonstration, you need to have the following prerequisites:
@@ -41,6 +43,10 @@ To set up the demonstration, you need to have the following prerequisites:
 * skupper client installed and configured to access the OpenShift cluster.
 * Podman installed to run the private Skupper.
 
+
+[#_getting_started]
+
+[#_ai_model_deployment_with_instructlab]
 === AI Model Deployment with InstructLab
 
 The first step is to deploy the InstructLab chat model in the InstructLab site. The InstructLab chat model will be responsible for receiving the user input and sending it to the LLaMA3 model. The response from the LLaMA3 model will be sent back to the user. This is based on the article: https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting Started with InstructLab for Generative AI Model Tuning].
@@ -111,7 +117,7 @@ Now you need to download the model, this is the step where you download the mode
 ilab download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf
 ----
 
-
+[#_training_the_model]
 == Training the model (Optional)
 
 Now you have 2 options to train the model, you can use the InstructLab to train the model or you can use the pre-trained model. In this case, we will use the pre-trained model. The next steps into this section are optional, we will work with the model alignment and training with InstructLab. If dont want to train the model, please skip this section.
@@ -238,6 +244,7 @@ INFO 2024-07-30 18:59:01,611 server.py:218: server Starting server process, pres
 INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup complete see http://0.0.0.0:8000/docs for API.
 ----
 
+[#_public_skupper_deployment]
 == Public Skupper Deployment
 
 Deploy the public Skupper in Openshift Cluster. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
@@ -289,6 +296,7 @@ skupper token create token.yaml
 
 Now, you'll have a `token.yaml` file with the token to connect the two sites.
 
+[#_private_skupper_deployment]
 == Private Skupper Deployment
 
 The second step is to deploy the private Skupper in Private Local Environment. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the InstructLab chat model. 
@@ -414,7 +422,13 @@ The last step is to expose the service in the public Skupper and create the Olla
 skupper service create instructlab 8000
 ----
 
-== Finally, to interact with the chatbot
+[NOTE]
+====
+* `skupper service create instructlab 8000` is used to create the service in the public Skupper, allowing it to be accessed from the private Skupper.
+====
+
+[#_deploying_instructlab_chatbot]
+== Deploying the InstructLab Chatbot
 
 Before run the chatbot, let's understand the final part of this solution, the Frontend application.
 
@@ -554,13 +568,14 @@ oc get route ilab-client-route
 * The `oc get route ilab-client-route` command is used to get the public URL of the ILAB Frontend chatbot, which will be used to access the chatbot from the Ollama Pilot application.
 ====
 
+[#_interacting_with_the_chatbot]
 == Interacting with the chatbot
 
 To interact with the chatbot, you can access the public URL of the ILAB Frontend chatbot using a web browser. The chatbot will be displayed on the screen, and you can start interacting with it by typing messages in the chat window.
 
-
 image::chat_bot.png[Chatbot]
 
+[#_considerations]
 === Considerations
 
 * If your machine has an Nvidia GPU, you can use the InstructLab chat model to generate responses to user input. The InstructLab chat model is a large language model trained on the Merlinite dataset and is capable of generating human-like responses to user input. By following the steps outlined in this demonstration, you can deploy the InstructLab chat model in your environment and interact with it using the ILAB Frontend chatbot. This will allow you to experience the power of generative AI models and see how they can be used to create engaging and interactive applications.

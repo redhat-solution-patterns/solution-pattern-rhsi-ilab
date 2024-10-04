@@ -10,10 +10,15 @@
 
 * xref:03-demo.adoc[{counter:module}. See the Solution in Action]
 ** xref:03-demo.adoc#_demonstration[{module}.{counter:submodule3}. Demonstration]
-** xref:03-demo.adoc#_run_the_demonstration[{module}.{counter:submodule3}. Run this demonstration]
 *** xref:03-demo.adoc#_before_getting_started[{module}.{counter:submodule3}. Pre-requisites]
-*** xref:03-demo.adoc#_installing_the_demo[{module}.{counter:submodule3}. Installing the demo]
-*** xref:03-demo.adoc#_walkthrough_guide[{module}.{counter:submodule3}. Walkthrough guide]
+*** xref:03-demo.adoc#_getting_started[{module}.{counter:submodule3}. Getting started]
+*** xref:03-demo.adoc#_ai_model_deployment_with_instructlab[{module}.{counter:submodule3}. AI model deployment with InstructLab]
+*** xref:03-demo.adoc#_training_the_model[{module}.{counter:submodule3}. Training the model]
+*** xref:03-demo.adoc#_public_skupper_deployment[{module}.{counter:submodule3}. Public Skupper deployment]
+*** xref:03-demo.adoc#_private_skupper_deployment[{module}.{counter:submodule3}. Private Skupper deployment]
+*** xref:03-demo.adoc#_deploying_instructlab_chatbot[{module}.{counter:submodule3}. Deploying InstructLab Chatbot]
+*** xref:03-demo.adoc#_interacting_with_the_chatbot[{module}.{counter:submodule3}. Interacting with the chatbot]
+*** xref:03-demo.adoc#_considerations[{module}.{counter:submodule3}. Considerations]
 
 * xref:04-conclusion.adoc[{counter:module}. Conclusion]
 
