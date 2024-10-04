@@ -143,7 +143,6 @@ mkdir -p taxonomy/knowledge/trivia/redhat
 touch taxonomy/knowledge/trivia/redhat/qna.yaml
 ----
 
-
 If you check the `qna.yaml` file, you will see the following content:
 
 [source,yaml]
@@ -214,6 +213,10 @@ Let's break down the commands:
 [IMPORTANT]
 ====
 * The training requires a significant amount of computational resources and time, depending on the size of the model and the complexity of the training data. Make sure you have the necessary resources available before starting the training process.
+* The training part could take a long time, depending on the size of the model and the complexity of the training data. Make sure you have the necessary resources available before starting the training process. At my machine, the training took around 20 hours:
+* Specs:
+** 13th Gen Intel(R) Core(TM) i7-1365U
+** 32GB RAM
 ====
 
 === Conclusion of the training section
