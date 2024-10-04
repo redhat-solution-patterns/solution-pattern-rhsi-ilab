@@ -346,7 +346,7 @@ serve:
 </div>
 </div>
 <div class="sect2">
-<h3 id="_download_the_model"><a class="anchor" href="#_download_the_model"></a>Download the model</h3>
+<h3 id="_download_the_model_base"><a class="anchor" href="#_download_the_model_base"></a>Download the model base</h3>
 <div class="paragraph">
 <p>Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the granite-7b-lab-Q4_K_M.gguf model, which is a large language model trained on the Merlinite dataset. To download the model, run the following command:</p>
 </div>
@@ -356,10 +356,204 @@ serve:
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_training_the_model_optional"><a class="anchor" href="#_training_the_model_optional"></a>Training the model (Optional)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you have 2 options to train the model, you can use the InstructLab to train the model or you can use the pre-trained model. In this case, we will use the pre-trained model. The next steps into this section are optional, we will work with the model alignment and training with InstructLab. If dont want to train the model, please skip this section.</p>
+</div>
+<div class="sect2">
+<h3 id="_introduction_to_model_alignment_and_training_with_instructlab"><a class="anchor" href="#_introduction_to_model_alignment_and_training_with_instructlab"></a>Introduction to Model Alignment and Training with InstructLab</h3>
+<div class="paragraph">
+<p>The pre-trained model is a large language model trained on the granite dataset. The model is capable of generating human-like responses to user input and can be used to create engaging and interactive applications. In this section, we will explore how to align and train the model using InstructLab, a tool that simplifies the process of training and fine-tuning generative AI models.</p>
+</div>
+<div class="paragraph">
+<p>In this example, we will add new information into our model, to achieve this, we will work with the taxonomy. The taxonomy is a hierarchical structure that organizes the information used to train the model. By adding new information to the taxonomy, we can improve the model&#8217;s ability to generate relevant and accurate responses to user input.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The taxonomy is a key component of the training process, as it provides the model with the knowledge it needs to generate responses to user input. By adding new information to the taxonomy, we can improve the model&#8217;s performance and create more engaging and interactive applications.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If you want a deep dive into the model alignment and training with InstructLab, please check the article: <a href="https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab">Getting Started with InstructLab for Generative AI Model Tuning</a>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_knowledge_to_the_taxonomy"><a class="anchor" href="#_adding_knowledge_to_the_taxonomy"></a>Adding knowledge to the taxonomy</h3>
+<div class="paragraph">
+<p>Let&#8217;s create a new file under the <code>taxonomy</code> directory, located at <code>~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml</code>. This file will contain information about curiosities from Red Hat, Open Source, and the community. To create the file, run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">mkdir -p taxonomy/knowledge/trivia/redhat
+touch taxonomy/knowledge/trivia/redhat/qna.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you check the <code>qna.yaml</code> file, you will see the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">version: 2
+task_description: 'Teach the model about curiosities from Red Hat, Open Source, and the community'
+created_by: rafaelvzago
+domain: technology
+seed_examples:
+  - question: What is the origin of the name "Red Hat" in Red Hat Inc.?
+    answer: |
+      The name "Red Hat" comes from co-founder Marc Ewing's red Cornell University lacrosse hat, which he wore
+      while working on early versions of Red Hat Linux.
+  - question: When was Red Hat founded and by whom?
+    answer: |
+      Red Hat was founded in 1993 by Bob Young and Marc Ewing.
+  - question: What is the Fedora Project and its relationship with Red Hat?
+    answer: |
+      The Fedora Project is a community-driven Linux distribution sponsored by Red Hat. It serves as the upstream
+      source for innovations that may be included in Red Hat Enterprise Linux.
+  - question: How did IBM's acquisition of Red Hat in 2019 impact the open-source community?
+    answer: |
+      IBM's $34 billion acquisition of Red Hat in 2019 was one of the largest in tech history, reinforcing the
+      importance of open-source software in enterprise solutions and expanding Red Hat's global reach.
+  - question: What is OpenShift and why is it significant in the open-source community?
+    answer: |
+      OpenShift is Red Hat's open-source container application platform based on Kubernetes. It enables developers
+      to build, deploy, and manage containerized applications, promoting cloud-native development practices.
+document:
+  repo: https://github.com/rafaelvzago/red-hat-opensource-curiosities.git
+  commit: a70c2cd
+  patterns:
+    - curiosities.md</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Left no blank lines between the YAML keys and values, neither at the end of the file.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is the content of the <code>qna.yaml</code> file, which contains information about curiosities from Red Hat, Open Source, and the community. The file includes questions and answers related to the origin of the name "Red Hat," the founding of Red Hat, the Fedora Project, IBM&#8217;s acquisition of Red Hat, and OpenShift. This information will be used to train the model and improve its ability to generate responses to user input.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_training_the_model_with_the_new_knowledge"><a class="anchor" href="#_training_the_model_with_the_new_knowledge"></a>Training the model with the new knowledge</h3>
+<div class="paragraph">
+<p>Now that we have added new information to the taxonomy, we can train the model with this knowledge. To train the model, run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab taxonomy diff
+ilab data generate
+ilab model train
+ilab model convert
+ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s break down the commands:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>ilab taxonomy diff</code> command is used to check the differences between the current taxonomy and the new taxonomy file.</p>
+</li>
+<li>
+<p>The <code>ilab data generate</code> command is used to generate the training data for the model based on the information in the taxonomy.</p>
+</li>
+<li>
+<p>The <code>ilab model train</code> command is used to train the model with the new knowledge from the taxonomy.</p>
+</li>
+<li>
+<p>The <code>ilab model convert</code> command is used to convert the trained model to a format that can be used by the chatbot.</p>
+</li>
+<li>
+<p>The <code>ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf</code> command is used to start the server with the new model, allowing the chatbot to interact with it.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The training requires a significant amount of computational resources and time, depending on the size of the model and the complexity of the training data. Make sure you have the necessary resources available before starting the training process.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conclusion_of_the_training_section"><a class="anchor" href="#_conclusion_of_the_training_section"></a>Conclusion of the training section</h3>
+<div class="paragraph">
+<p>Our goal with this solution is to show how to deploy the InstructLab chat model and interact with it using the ILAB Frontend chatbot. The training section is optional, and you can skip it if you want to use the pre-trained model. The next steps will focus on deploying the InstructLab chat model and interacting with it using the ILAB Frontend chatbot.</p>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_start_the_server"><a class="anchor" href="#_start_the_server"></a>Start the server</h3>
 <div class="paragraph">
-<p>The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.</p>
+<p>The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user. If you have trained the model, you can use the new model path. If you are using the pre-trained model, you can use the default model path. To start the server, run the following command:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -733,9 +927,12 @@ Current links from other sites that are connected:
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Deploy ILAB Frontend chatbot</p>
+</td>
+</tr>
+</table>
 </div>
+<div class="sect2">
+<h3 id="_deploy_ilab_frontend_chatbot"><a class="anchor" href="#_deploy_ilab_frontend_chatbot"></a>Deploy ILAB Frontend chatbot</h3>
 <div class="paragraph">
 <p>To deploy the ILAB Frontend chatbot, lets use the following yaml deployment file, in this case the file is located at <code>~/instructlab/ilab-client-deployment.yaml</code>:</p>
 </div>
@@ -776,10 +973,13 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-deployment.yaml</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
 </td>
-</tr>
-</table>
-</div>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -793,11 +993,13 @@ spec:
 </li>
 </ul>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>=== Creating the service of the ILAB Frontend chatbot deployment</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_service_of_the_ilab_frontend_chatbot_deployment"><a class="anchor" href="#_creating_the_service_of_the_ilab_frontend_chatbot_deployment"></a>Creating the service of the ILAB Frontend chatbot deployment</h3>
 <div class="paragraph">
 <p>Now, let&#8217;s create the service for the ILAB Frontend chatbot deployment, the file is located at <code>~/instructlab/ilab-client-service.yaml</code>:</p>
 </div>
@@ -824,8 +1026,13 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-service.yaml</code></pre>
 </div>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -836,11 +1043,13 @@ spec:
 </li>
 </ul>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>=== Exposing the service of the ILAB Frontend chatbot deployment</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_exposing_the_service_of_the_ilab_frontend_chatbot_deployment"><a class="anchor" href="#_exposing_the_service_of_the_ilab_frontend_chatbot_deployment"></a>Exposing the service of the ILAB Frontend chatbot deployment</h3>
 <div class="paragraph">
 <p>We are almost there, now let&#8217;s expose the service of the ILAB Frontend chatbot deployment, the file is located at <code>~/instructlab/ilab-client-route.yaml</code>:</p>
 </div>
@@ -866,8 +1075,13 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc apply -f ~/instructlab/ilab-client-route.yaml</code></pre>
 </div>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -878,11 +1092,13 @@ spec:
 </li>
 </ul>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>=== Accessing the ILAB Frontend chatbot</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_accessing_the_ilab_frontend_chatbot"><a class="anchor" href="#_accessing_the_ilab_frontend_chatbot"></a>Accessing the ILAB Frontend chatbot</h3>
 <div class="paragraph">
 <p>Finally, to access the ILAB Frontend chatbot, you can use the following command to get the public URL:</p>
 </div>
@@ -891,8 +1107,13 @@ spec:
 <pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc get route ilab-client-route</code></pre>
 </div>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="ulist">
 <ul>
 <li>
@@ -900,11 +1121,16 @@ spec:
 </li>
 </ul>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>== Interacting with the chatbot</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interacting_with_the_chatbot"><a class="anchor" href="#_interacting_with_the_chatbot"></a>Interacting with the chatbot</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To interact with the chatbot, you can access the public URL of the ILAB Frontend chatbot using a web browser. The chatbot will be displayed on the screen, and you can start interacting with it by typing messages in the chat window.</p>
 </div>
@@ -913,9 +1139,8 @@ spec:
 <img src="_images/chat_bot.png" alt="Chatbot">
 </div>
 </div>
-<div class="paragraph">
-<p>=== Considerations</p>
-</div>
+<div class="sect2">
+<h3 id="_considerations"><a class="anchor" href="#_considerations"></a>Considerations</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -928,7 +1153,6 @@ spec:
 <p>Image repository for ilab-client: <a href="https://github.com/rafaelvzago/ilab-client">rafaelvzago/ilab-client</a></p>
 </li>
 </ul>
-</div>
 </div>
 </div>
 </div>
