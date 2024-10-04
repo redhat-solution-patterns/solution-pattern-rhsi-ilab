@@ -101,7 +101,7 @@ serve:
   model_path: models/granite-7b-lab-Q4_K_M.gguf
 ----
 
-=== Download the model
+=== Download the model base
 
 Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the granite-7b-lab-Q4_K_M.gguf model, which is a large language model trained on the Merlinite dataset. To download the model, run the following command:
 
@@ -111,9 +111,118 @@ Now you need to download the model, this is the step where you download the mode
 ilab download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf
 ----
 
+
+== Training the model (Optional)
+
+Now you have 2 options to train the model, you can use the InstructLab to train the model or you can use the pre-trained model. In this case, we will use the pre-trained model. The next steps into this section are optional, we will work with the model alignment and training with InstructLab. If dont want to train the model, please skip this section.
+
+=== Introduction to Model Alignment and Training with InstructLab
+
+The pre-trained model is a large language model trained on the granite dataset. The model is capable of generating human-like responses to user input and can be used to create engaging and interactive applications. In this section, we will explore how to align and train the model using InstructLab, a tool that simplifies the process of training and fine-tuning generative AI models.
+
+In this example, we will add new information into our model, to achieve this, we will work with the taxonomy. The taxonomy is a hierarchical structure that organizes the information used to train the model. By adding new information to the taxonomy, we can improve the model's ability to generate relevant and accurate responses to user input.
+
+[IMPORTANT]
+====
+* The taxonomy is a key component of the training process, as it provides the model with the knowledge it needs to generate responses to user input. By adding new information to the taxonomy, we can improve the model's performance and create more engaging and interactive applications.
+====
+
+[NOTE]
+====
+* If you want a deep dive into the model alignment and training with InstructLab, please check the article: https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting Started with InstructLab for Generative AI Model Tuning].
+====
+
+=== Adding knowledge to the taxonomy
+
+Let's create a new file under the `taxonomy` directory, located at `~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml`. This file will contain information about curiosities from Red Hat, Open Source, and the community. To create the file, run the following command:
+
+[.console-input]
+[source,shell script]
+----
+mkdir -p taxonomy/knowledge/trivia/redhat
+touch taxonomy/knowledge/trivia/redhat/qna.yaml
+----
+
+
+If you check the `qna.yaml` file, you will see the following content:
+
+[source,yaml]
+----
+version: 2
+task_description: 'Teach the model about curiosities from Red Hat, Open Source, and the community'
+created_by: rafaelvzago
+domain: technology
+seed_examples:
+  - question: What is the origin of the name "Red Hat" in Red Hat Inc.?
+    answer: |
+      The name "Red Hat" comes from co-founder Marc Ewing's red Cornell University lacrosse hat, which he wore
+      while working on early versions of Red Hat Linux.
+  - question: When was Red Hat founded and by whom?
+    answer: |
+      Red Hat was founded in 1993 by Bob Young and Marc Ewing.
+  - question: What is the Fedora Project and its relationship with Red Hat?
+    answer: |
+      The Fedora Project is a community-driven Linux distribution sponsored by Red Hat. It serves as the upstream
+      source for innovations that may be included in Red Hat Enterprise Linux.
+  - question: How did IBM's acquisition of Red Hat in 2019 impact the open-source community?
+    answer: |
+      IBM's $34 billion acquisition of Red Hat in 2019 was one of the largest in tech history, reinforcing the
+      importance of open-source software in enterprise solutions and expanding Red Hat's global reach.
+  - question: What is OpenShift and why is it significant in the open-source community?
+    answer: |
+      OpenShift is Red Hat's open-source container application platform based on Kubernetes. It enables developers
+      to build, deploy, and manage containerized applications, promoting cloud-native development practices.
+document:
+  repo: https://github.com/rafaelvzago/red-hat-opensource-curiosities.git
+  commit: a70c2cd
+  patterns:
+    - curiosities.md
+----
+
+[IMPORTANT]
+====
+* Left no blank lines between the YAML keys and values, neither at the end of the file.
+====
+
+This is the content of the `qna.yaml` file, which contains information about curiosities from Red Hat, Open Source, and the community. The file includes questions and answers related to the origin of the name "Red Hat," the founding of Red Hat, the Fedora Project, IBM's acquisition of Red Hat, and OpenShift. This information will be used to train the model and improve its ability to generate responses to user input.
+
+=== Training the model with the new knowledge
+
+Now that we have added new information to the taxonomy, we can train the model with this knowledge. To train the model, run the following command:
+
+[.console-input]
+[source,shell script]
+----
+ilab taxonomy diff
+ilab data generate
+ilab model train
+ilab model convert
+ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf
+----
+
+Let's break down the commands:
+
+[NOTE]
+====
+* The `ilab taxonomy diff` command is used to check the differences between the current taxonomy and the new taxonomy file.
+* The `ilab data generate` command is used to generate the training data for the model based on the information in the taxonomy.
+* The `ilab model train` command is used to train the model with the new knowledge from the taxonomy.
+* The `ilab model convert` command is used to convert the trained model to a format that can be used by the chatbot.
+* The `ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf` command is used to start the server with the new model, allowing the chatbot to interact with it.
+====
+
+[IMPORTANT]
+====
+* The training requires a significant amount of computational resources and time, depending on the size of the model and the complexity of the training data. Make sure you have the necessary resources available before starting the training process.
+====
+
+=== Conclusion of the training section
+
+Our goal with this solution is to show how to deploy the InstructLab chat model and interact with it using the ILAB Frontend chatbot. The training section is optional, and you can skip it if you want to use the pre-trained model. The next steps will focus on deploying the InstructLab chat model and interacting with it using the ILAB Frontend chatbot.
+
 === Start the server
 
-The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.
+The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user. If you have trained the model, you can use the new model path. If you are using the pre-trained model, you can use the default model path. To start the server, run the following command:
 
 [.console-input]
 [source,shell script]
@@ -312,6 +421,7 @@ This application will be deployed in a OpenShift cluster, and will be responsibl
 [IMPORTANT]
 ====
 * The frontend application called ILAB Frontend chatbot will use the local service in the public cluster to send the user input to the InstructLab chat model and display the response to the user. See the line 23 of the `ilab-client-deployment.yaml` file.
+====
 
 === Deploy ILAB Frontend chatbot
 
