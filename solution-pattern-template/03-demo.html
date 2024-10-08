@@ -320,8 +320,38 @@ pip install 'instructlab[cuda]' -C cmake.args="-DLLAMA_CUDA=on" -C cmake.args="-
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab config init</code></pre>
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab config init
+Welcome to InstructLab CLI. This guide will help you to setup your environment.
+Please provide the following values to initiate the environment [press Enter for defaults]:
+Path to taxonomy repo [taxonomy]:
+`taxonomy` seems to not exist or is empty. Should I clone https://github.com/instructlab/taxonomy.git for you? [y/N]: y
+Cloning https://github.com/instructlab/taxonomy.git...
+Generating `config.yaml` in the current directory...</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>ilab config init</code> command is used to initialize the InstructLab configuration, creating the <code>config.yaml</code> file with the default configuration.</p>
+</li>
+<li>
+<p>The <code>taxonomy</code> directory is used to store the taxonomy files, which contain the information used to train the model. First press Enter to use the default value, then type <code>y</code> to clone the taxonomy repository.</p>
+</li>
+<li>
+<p>The <code>config.yaml</code> file contains the configuration settings for the InstructLab chat model, such as the model path, logs directory, and context.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To enable external access to your model, please modify the <code>config.yaml</code> file, located into your <code>instructlab</code> directory ie. <code>~/instructlab/config.yaml</code>, with the following content:</p>
