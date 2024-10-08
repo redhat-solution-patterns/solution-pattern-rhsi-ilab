@@ -424,7 +424,13 @@ serve:
 <div class="sect2">
 <h3 id="_adding_knowledge_to_the_taxonomy"><a class="anchor" href="#_adding_knowledge_to_the_taxonomy"></a>Adding knowledge to the taxonomy</h3>
 <div class="paragraph">
-<p>Let&#8217;s create a new file under the <code>taxonomy</code> directory, located at <code>~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml</code>. This file will contain information about curiosities from Red Hat, Open Source, and the community. To create the file, run the following command:</p>
+<p>Let&#8217;s create a new file under the <code>taxonomy</code> directory, located at <code>~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml</code>. This file will contain information about curiosities from Red Hat, Open Source, and the community.</p>
+</div>
+<div class="paragraph">
+<p>This file will be used to train the model with new knowledge about Red Hat, Open Source, and the community. The file contains questions and answers related to the origin of the name "Red Hat," the founding of Red Hat, the Fedora Project, IBM&#8217;s acquisition of Red Hat, and OpenShift. This information will be used to improve the model&#8217;s ability to generate responses to user input.</p>
+</div>
+<div class="paragraph">
+<p>To create the file, run the following command at ' ~/instructlab':</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -433,7 +439,7 @@ touch taxonomy/knowledge/trivia/redhat/qna.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you check the <code>qna.yaml</code> file, you will see the following content:</p>
+<p>Copy and paste the following content into the <code>qna.yaml</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
