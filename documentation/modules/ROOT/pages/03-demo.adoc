@@ -204,7 +204,7 @@ Now that we have added new information to the taxonomy, we can train the model w
 [source,shell script]
 ----
 ilab taxonomy diff
-ilab data generate
+ilab data generate --num-instructions 5
 ilab model train
 ilab model convert
 ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf
@@ -215,7 +215,7 @@ Let's break down the commands:
 [NOTE]
 ====
 * The `ilab taxonomy diff` command is used to check the differences between the current taxonomy and the new taxonomy file.
-* The `ilab data generate` command is used to generate the training data for the model based on the information in the taxonomy.
+* The `ilab data generate --num-instructions 5` command is used to generate training data based on the new taxonomy file. The `--num-instructions` flag specifies the number of training instructions to generate. In this case, we are generating 5 training instructions for demonstration purposes.
 * The `ilab model train` command is used to train the model with the new knowledge from the taxonomy.
 * The `ilab model convert` command is used to convert the trained model to a format that can be used by the chatbot.
 * The `ilab model serve --model-path NEW_MODEL_PATH/MODEL_NAME.gguf` command is used to start the server with the new model, allowing the chatbot to interact with it.
