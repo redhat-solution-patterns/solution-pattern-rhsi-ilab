@@ -73,7 +73,20 @@ After installing InstructLab, you need to initialize the configuration. This is 
 [source,shell script]
 ----
 ilab config init
+Welcome to InstructLab CLI. This guide will help you to setup your environment.
+Please provide the following values to initiate the environment [press Enter for defaults]:
+Path to taxonomy repo [taxonomy]:
+`taxonomy` seems to not exist or is empty. Should I clone https://github.com/instructlab/taxonomy.git for you? [y/N]: y
+Cloning https://github.com/instructlab/taxonomy.git...
+Generating `config.yaml` in the current directory...
 ----
+
+[NOTE]
+====
+* The `ilab config init` command is used to initialize the InstructLab configuration, creating the `config.yaml` file with the default configuration.
+* The `taxonomy` directory is used to store the taxonomy files, which contain the information used to train the model. First press Enter to use the default value, then type `y` to clone the taxonomy repository.
+* The `config.yaml` file contains the configuration settings for the InstructLab chat model, such as the model path, logs directory, and context.
+====
 
 To enable external access to your model, please modify the `config.yaml` file, located into your `instructlab` directory ie. `~/instructlab/config.yaml`, with the following content:
 
