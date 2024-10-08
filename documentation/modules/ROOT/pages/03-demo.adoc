@@ -140,7 +140,12 @@ In this example, we will add new information into our model, to achieve this, we
 
 === Adding knowledge to the taxonomy
 
-Let's create a new file under the `taxonomy` directory, located at `~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml`. This file will contain information about curiosities from Red Hat, Open Source, and the community. To create the file, run the following command:
+Let's create a new file under the `taxonomy` directory, located at `~/instructlab/taxonomy/knowledge/trivia/redhat/qna.yaml`. This file will contain information about curiosities from Red Hat, Open Source, and the community. 
+
+This file will be used to train the model with new knowledge about Red Hat, Open Source, and the community. The file contains questions and answers related to the origin of the name "Red Hat," the founding of Red Hat, the Fedora Project, IBM's acquisition of Red Hat, and OpenShift. This information will be used to improve the model's ability to generate responses to user input.
+
+To create the file, run the following command at ' ~/instructlab':
+
 
 [.console-input]
 [source,shell script]
@@ -149,7 +154,7 @@ mkdir -p taxonomy/knowledge/trivia/redhat
 touch taxonomy/knowledge/trivia/redhat/qna.yaml
 ----
 
-If you check the `qna.yaml` file, you will see the following content:
+Copy and paste the following content into the `qna.yaml` file:
 
 [source,yaml]
 ----
