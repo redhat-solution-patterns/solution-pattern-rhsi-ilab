@@ -110,10 +110,10 @@ Initialization completed successfully, you're ready to start using `ilab`. Enjoy
 * The `ilab config init` command is used to initialize the InstructLab configuration, creating the `config.yaml` file with the default configuration.
 * The user is prompted to provide the necessary values to initialize the environment, such as the path to the taxonomy repo and the path to the model.
 * After running ilab config init your directories will look like the following on a Linux system:
-├─ ~/.cache/instructlab/models/ (1)
-├─ ~/.local/share/instructlab/datasets (2)
-├─ ~/.local/share/instructlab/taxonomy (3)
-├─ ~/.local/share/instructlab/checkpoints (4)
+** ~/.cache/instructlab/models/ (1)
+** ~/.local/share/instructlab/datasets (2)
+** ~/.local/share/instructlab/taxonomy (3)
+** ~/.local/share/instructlab/checkpoints (4)
 
 (1) Directory where the models are stored.
 (2) Directory where the datasets are stored.
