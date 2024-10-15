@@ -1,5 +1,5 @@
 name: solution-pattern-template
-title: Secure AI Model Hosting
+title: Secure Local AI Models
 version: master
 nav:
   - modules/ROOT/nav.adoc
