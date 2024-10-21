@@ -133,6 +133,32 @@ host_port: 0.0.0.0:8000
 * The `host_port: The IP address and port where the model will be exposed. In this case, the model will be exposed on all interfaces.
 ====
 
+Before starting the server, download the model to be used by the chatbot. The `ilab download` command is used to download the model to be used by the chatbot. Run the following command:
+
+[.console-input]
+[source,shell script]
+----
+ilab model download
+----
+
+[NOTE]
+====
+* The `ilab download` command is used to download the model to be used by the chatbot.
+====
+
+Now, start the server that will be responsible for receiving the user input, sending it to the model, and sending the response back to the user. The `ilab model serve` command is used to start the server. Run the following command:
+
+[.console-input]
+[source,shell script]
+----
+ilab model serve
+----
+
+[NOTE]
+====
+* The `ilab model serve` command is used to start the server that will be responsible for receiving the user input, sending it to the model, and sending the response back to the user.
+====
+
 [#_public_skupper_deployment]
 == Public Skupper Deployment
 
@@ -191,7 +217,20 @@ The second step is to deploy the private Skupper in Private Local Environment. T
 
 === Install Skupper
 
-To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper.
+To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper. Here, we will create a skuper site using podman as the platform, we need to enable the podan service before running the skupper init command:
+
+[.console-input]
+[source,shell script]
+----
+systemctl --user enable --now podman.socket
+----
+
+[NOTE]
+====
+* `systemctl --user enable --now podman.socket` is used to enable and start the podman service at the user level.
+====
+
+Now, run the following commands to install Skupper:
 
 [.console-input]
 [source,shell script]
