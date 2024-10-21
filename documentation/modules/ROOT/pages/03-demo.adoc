@@ -191,7 +191,20 @@ The second step is to deploy the private Skupper in Private Local Environment. T
 
 === Install Skupper
 
-To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper.
+To install skupper on site A, with podman as the platform, open a new terminal to handle all the commands related to the private Skupper. Here, we will create a skuper site using podman as the platform, we need to enable the podan service before running the skupper init command:
+
+[.console-input]
+[source,shell script]
+----
+systemctl --user enable --now podman.socket
+----
+
+[NOTE]
+====
+* `systemctl --user enable --now podman.socket` is used to enable and start the podman service at the user level.
+====
+
+Now, run the following commands to install Skupper:
 
 [.console-input]
 [source,shell script]
