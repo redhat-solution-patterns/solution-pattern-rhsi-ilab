@@ -133,6 +133,32 @@ host_port: 0.0.0.0:8000
 * The `host_port: The IP address and port where the model will be exposed. In this case, the model will be exposed on all interfaces.
 ====
 
+Before starting the server, download the model to be used by the chatbot. The `ilab download` command is used to download the model to be used by the chatbot. Run the following command:
+
+[.console-input]
+[source,shell script]
+----
+ilab model download
+----
+
+[NOTE]
+====
+* The `ilab download` command is used to download the model to be used by the chatbot.
+====
+
+Now, start the server that will be responsible for receiving the user input, sending it to the model, and sending the response back to the user. The `ilab model serve` command is used to start the server. Run the following command:
+
+[.console-input]
+[source,shell script]
+----
+ilab model serve
+----
+
+[NOTE]
+====
+* The `ilab model serve` command is used to start the server that will be responsible for receiving the user input, sending it to the model, and sending the response back to the user.
+====
+
 [#_public_skupper_deployment]
 == Public Skupper Deployment
 
