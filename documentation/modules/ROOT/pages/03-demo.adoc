@@ -264,6 +264,11 @@ skupper expose host <YOUR MACHINE IP> --address instructlab --port 8000
 * `--port 8000` is used to specify the port of the service.
 ====
 
+[IMPORTANT]
+====
+* The port 8000 needs to be open in the firewall into your internal network.
+====
+
 Check the status of the Skupper service:
 
 [.console-input]
