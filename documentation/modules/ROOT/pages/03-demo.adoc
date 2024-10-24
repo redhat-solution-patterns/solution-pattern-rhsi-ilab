@@ -253,13 +253,13 @@ To bind the local service running the InstructLab chat model to the Skupper serv
 [.console-input]
 [source,shell script]
 ----
-skupper expose host host.containers.internal --address instructlab --port 8000
+skupper expose host <YOUR MACHINE IP> --address instructlab --port 8000
 ----
 
 [NOTE]
 ====
 * `skupper expose` is used to expose a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.
-* `host.containers.internal` is used to bind the local service to the Skupper service.
+* `host <YOUR MACHINE IP>` is used to specify the IP address of the machine where the service is running.
 * `--address instructlab` is used to specify the address of the service.
 * `--port 8000` is used to specify the port of the service.
 ====
