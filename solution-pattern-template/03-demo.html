@@ -676,7 +676,7 @@ skupper init --ingress none</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper expose host host.containers.internal --address instructlab --port 8000</code></pre>
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper expose host &lt;YOUR MACHINE IP&gt; --address instructlab --port 8000</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -692,13 +692,31 @@ skupper init --ingress none</code></pre>
 <p><code>skupper expose</code> is used to expose a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.</p>
 </li>
 <li>
-<p><code>host.containers.internal</code> is used to bind the local service to the Skupper service.</p>
+<p><code>host &lt;YOUR MACHINE IP&gt;</code> is used to specify the IP address of the machine where the service is running.</p>
 </li>
 <li>
 <p><code>--address instructlab</code> is used to specify the address of the service.</p>
 </li>
 <li>
 <p><code>--port 8000</code> is used to specify the port of the service.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The port 8000 needs to be open in the firewall into your internal network.</p>
 </li>
 </ul>
 </div>
